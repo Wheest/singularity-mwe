@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: debian:latest
+
+%files
+    setup /root/
+    application /root/
+    run /root/
+
+%post
+    bash /root/setup/setup_script.sh
+    bash /root/setup/build_app.sh
+
+%runscript
+    exec echo "Try running with --app quick_run|full_run, and specify an output directory"
+
+%apprun full_run
+    exec bash /exper/run/full_script.sh "$@"
+
+%apprun quick_run
+    exec bash /exper/run/quick_script.sh "$@"
